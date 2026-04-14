@@ -209,5 +209,4 @@ class MylarSeriesProviderTest {
       assertThat(titleSort).isEqualTo("Sandman (1990)")
     }
   }
-
 }
