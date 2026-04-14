@@ -69,11 +69,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Debug JReleaser Docker context
+        run: |
+          ls -la build/jreleaser/package || true
+          ls -la build/jreleaser/package/komga || true
+          ls -la build/jreleaser/package/komga/docker || true
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          # JReleaser outputdir is the repo root `build/jreleaser` (see jreleaserPackage log), not under `komga/`.
-          context: ./build/jreleaser/package/docker
+          # JReleaser package output is distribution-scoped under build/jreleaser/package/<distribution>/...
+          context: ./build/jreleaser/package/komga/docker
           push: true
           platforms: linux/amd64
           tags: |
