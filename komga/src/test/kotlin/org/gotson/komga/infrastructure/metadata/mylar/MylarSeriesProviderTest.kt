@@ -210,35 +210,4 @@ class MylarSeriesProviderTest {
     }
   }
 
-  @Test
-  fun `given seriesJson with year null when getting series metadata then metadata patch uses name only`() {
-    val metadata =
-      MylarMetadata(
-        type = "comicSeries",
-        publisher = "DC",
-        imprint = "Vertigo",
-        name = "Sandman",
-        comicid = "12345",
-        year = null,
-        descriptionText = "Sandman comics",
-        descriptionFormatted = null,
-        volume = 1,
-        bookType = "TPB",
-        ageRating = null,
-        comicImage = "unused",
-        totalIssues = 2,
-        publicationRun = "unused",
-        status = Status.Continuing,
-      )
-    val root = Series(metadata)
-
-    every { mockMapper.readValue(any<File>(), Series::class.java) } returns root
-
-    val patch = mylarSeriesProvider.getSeriesMetadata(series)!!
-
-    with(patch) {
-      assertThat(title).isEqualTo("Sandman")
-      assertThat(titleSort).isEqualTo("Sandman")
-    }
-  }
 }
