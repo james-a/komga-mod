@@ -72,7 +72,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./komga/build/jreleaser/package/docker
+          # JReleaser outputdir is the repo root `build/jreleaser` (see jreleaserPackage log), not under `komga/`.
+          context: ./build/jreleaser/package/docker
           push: true
           platforms: linux/amd64
           tags: |

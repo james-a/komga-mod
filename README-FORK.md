@@ -8,8 +8,8 @@ This tree is based on [gotson/komga](https://github.com/gotson/komga) with a sma
 
 ## Code changes
 
-- `komga/.../mylar/MylarSeriesProvider.kt` — title / titleSort from year when available.
-- `komga/.../mylar/dto/MylarMetadata.kt` — `year` is optional (`Int?`) so missing JSON `year` still maps cleanly.
+- `komga/.../mylar/MylarSeriesProvider.kt` — title / titleSort include Mylar `year` in the form `Name (year)` (same as upstream expectation that `year` exists in `series.json`).
+- `komga/.../mylar/dto/MylarMetadata.kt` — unchanged from upstream aside from your branch history; `year` remains a required field in the DTO (invalid/missing `year` in JSON still fails deserialization tests).
 
 After upgrading from upstream, re-run tests touching Mylar if those files conflict.
 
