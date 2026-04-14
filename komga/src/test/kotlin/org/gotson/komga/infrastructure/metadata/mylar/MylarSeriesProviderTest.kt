@@ -59,8 +59,8 @@ class MylarSeriesProviderTest {
     val patch = mylarSeriesProvider.getSeriesMetadata(series)!!
 
     with(patch) {
-      assertThat(title).isEqualTo("Sàndman")
-      assertThat(titleSort).isEqualTo("Sàndman")
+      assertThat(title).isEqualTo("Sàndman (1990)")
+      assertThat(titleSort).isEqualTo("Sàndman (1990)")
       assertThat(status).isEqualTo(SeriesMetadata.Status.ENDED)
       assertThat(summary).isEqualTo("Sandman comics formatted")
       assertThat(readingDirection).isNull()
@@ -100,8 +100,8 @@ class MylarSeriesProviderTest {
     val patch = mylarSeriesProvider.getSeriesMetadata(series)!!
 
     with(patch) {
-      assertThat(title).isEqualTo("Sandman")
-      assertThat(titleSort).isEqualTo("Sandman")
+      assertThat(title).isEqualTo("Sandman (1990)")
+      assertThat(titleSort).isEqualTo("Sandman (1990)")
       assertThat(status).isEqualTo(SeriesMetadata.Status.ONGOING)
       assertThat(summary).isEqualTo("Sandman comics")
       assertThat(readingDirection).isNull()
@@ -147,7 +147,7 @@ class MylarSeriesProviderTest {
   }
 
   @Test
-  fun `given seriesJson with volume == 1 and year when getting series metadata then metadata patch has title not containing the year`() {
+  fun `given seriesJson with volume == 1 and year when getting series metadata then metadata patch has title containing the year`() {
     val metadata =
       MylarMetadata(
         type = "comicSeries",
@@ -173,13 +173,13 @@ class MylarSeriesProviderTest {
     val patch = mylarSeriesProvider.getSeriesMetadata(series)!!
 
     with(patch) {
-      assertThat(title).isEqualTo("Sandman")
-      assertThat(titleSort).isEqualTo("Sandman")
+      assertThat(title).isEqualTo("Sandman (1990)")
+      assertThat(titleSort).isEqualTo("Sandman (1990)")
     }
   }
 
   @Test
-  fun `given seriesJson with volume == null and year when getting series metadata then metadata patch has title not containing the year`() {
+  fun `given seriesJson with volume == null and year when getting series metadata then metadata patch has title containing the year`() {
     val metadata =
       MylarMetadata(
         type = "comicSeries",
@@ -197,6 +197,38 @@ class MylarSeriesProviderTest {
         totalIssues = 2,
         publicationRun = "unused",
         status = Status.Ended,
+      )
+    val root = Series(metadata)
+
+    every { mockMapper.readValue(any<File>(), Series::class.java) } returns root
+
+    val patch = mylarSeriesProvider.getSeriesMetadata(series)!!
+
+    with(patch) {
+      assertThat(title).isEqualTo("Sandman (1990)")
+      assertThat(titleSort).isEqualTo("Sandman (1990)")
+    }
+  }
+
+  @Test
+  fun `given seriesJson with year null when getting series metadata then metadata patch uses name only`() {
+    val metadata =
+      MylarMetadata(
+        type = "comicSeries",
+        publisher = "DC",
+        imprint = "Vertigo",
+        name = "Sandman",
+        comicid = "12345",
+        year = null,
+        descriptionText = "Sandman comics",
+        descriptionFormatted = null,
+        volume = 1,
+        bookType = "TPB",
+        ageRating = null,
+        comicImage = "unused",
+        totalIssues = 2,
+        publicationRun = "unused",
+        status = Status.Continuing,
       )
     val root = Series(metadata)
 

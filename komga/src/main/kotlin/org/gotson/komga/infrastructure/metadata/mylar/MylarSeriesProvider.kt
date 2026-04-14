@@ -38,11 +38,7 @@ class MylarSeriesProvider(
       }
       val metadata = mapper.readValue(seriesJsonPath.toFile(), MylarSeries::class.java).metadata
 
-      val title =
-        if (metadata.volume == null || metadata.volume == 1)
-          metadata.name
-        else
-          "${metadata.name} (${metadata.year})"
+      val title = metadata.year?.let { "${metadata.name} ($it)" } ?: metadata.name
 
       return SeriesMetadataPatch(
         title = title,
