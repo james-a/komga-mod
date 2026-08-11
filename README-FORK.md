@@ -15,7 +15,7 @@ After upgrading from upstream, re-run tests touching Mylar if those files confli
 
 ## Local development
 
-- JDK **21+**, Node **18+** (see `.nvmrc`).
+- JDK **21+**, Node per UI project (`komga-webui/.nvmrc`, `next-ui/.nvmrc`).
 - Run unit tests: `./gradlew :komga:test --tests "org.gotson.komga.infrastructure.metadata.mylar.MylarSeriesProviderTest"`
 - Full backend run (see `DEVELOPING.md`): `./gradlew :komga:bootRun` with Spring profiles as documented.
 
@@ -24,8 +24,10 @@ After upgrading from upstream, re-run tests touching Mylar if those files confli
 1. Push this repo to **GitHub** (fork or private mirror).
 2. Open **Actions** → **Docker image (fork)** → **Run workflow**.
 3. Pull on your NAS, e.g.  
-   `docker pull ghcr.io/<your-github-username>/komga:<version>-custom`  
-   (see `gradle.properties` for `<version>`; the workflow also tags `latest`).
+   `docker pull ghcr.io/<your-github-username>/komga:<version>-mod.<n>`  
+   (`<version>` from `gradle.properties`, `<n>` from `fork.build`; the workflow also tags `latest`).
+
+**Fork image iterate:** bump the integer in `fork.build` whenever you publish another image for the same Komga version. After syncing to a new upstream version, reset `fork.build` to `1`.
 
 Use the image like the official Komga Docker image; configuration paths are unchanged.
 
