@@ -62,3 +62,9 @@ After a large sync, check whether `.github/workflows/release.yml` changed how UI
 
 - **Chromatic**, **Dispatch events**, and **Discord announce release** are gated with `if: github.repository_owner == 'gotson'` so they no-op on this fork.
 - Install [GitHub CLI](https://cli.github.com/) (`gh`) and authenticate for Actions logs, runs, and PR checks from the terminal.
+
+  ```powershell
+  gh auth login --hostname github.com --git-protocol https --web
+  gh auth status
+  gh run list --repo james-a/komga-mod --limit 5
+  ```
