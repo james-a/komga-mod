@@ -8,6 +8,7 @@ on:
 
 jobs:
   dispatch:
+    if: github.repository_owner == 'gotson'
     runs-on: ubuntu-latest
     steps:
       - name: Repository Dispatch

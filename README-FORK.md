@@ -60,5 +60,5 @@ After a large sync, check whether `.github/workflows/release.yml` changed how UI
 
 ## Optional / later
 
-- Upstream workflows such as **Chromatic** and **Dispatch events** fail here without upstream secrets — ignore, disable, or gate them on `github.repository_owner == 'gotson'`.
+- **Chromatic**, **Dispatch events**, and **Discord announce release** are gated with `if: github.repository_owner == 'gotson'` so they no-op on this fork.
 - Install [GitHub CLI](https://cli.github.com/) (`gh`) and authenticate for Actions logs, runs, and PR checks from the terminal.

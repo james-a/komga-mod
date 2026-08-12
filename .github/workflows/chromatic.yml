@@ -12,6 +12,7 @@ on:
 jobs:
   chromatic:
     name: Run Chromatic
+    if: github.repository_owner == 'gotson'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
